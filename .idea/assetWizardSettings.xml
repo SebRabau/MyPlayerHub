@@ -20,8 +20,7 @@
                                     <map>
                                       <entry key="backgroundImage" value="C:\Users\strab\Pictures\MyPlayerHub Logo.png" />
                                       <entry key="foregroundImage" value="C:\Users\strab\Pictures\MyPlayerHub Logo.png" />
-                                      <entry key="generateRoundIcon" value="false" />
-                                      <entry key="outputName" value="MPH" />
+                                      <entry key="outputName" value="mph" />
                                       <entry key="previewDensity" value="HIGH" />
                                     </map>
                                   </option>
