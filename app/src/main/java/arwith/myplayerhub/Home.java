@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,16 +17,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "Home";
 
     private FirebaseAuth mAuth;
 
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
-    private EditText mEmailField;
-    private EditText mPasswordField;
+    private TextView Status;
+    private EditText Email;
+    private EditText Password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +34,13 @@ public class Home extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        //mStatusView = findViewById(R.id.status);
-        //mDetailView = findViewById(R.id.detail);
-        //mEmailField = findViewById(R.id.fieldEmail);
-        //mPasswordField = findViewById(R.id.fieldPassword);
+        Status = findViewById(R.id.LoginStatus);
+        Email = findViewById(R.id.Email);
+        Password = findViewById(R.id.Password);
 
-        //findViewById(R.id.emailSignInButton).setOnClickListener(this);
-        //findViewById(R.id.emailCreateAccountButton).setOnClickListener(this);
+
+        findViewById(R.id.Submit).setOnClickListener(this);
+        findViewById(R.id.Create).setOnClickListener(this);
         //findViewById(R.id.signOutButton).setOnClickListener(this);
         //findViewById(R.id.verifyEmailButton).setOnClickListener(this);
     }
@@ -115,7 +115,7 @@ public class Home extends AppCompatActivity {
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            //mStatusTextView.setText(R.string.auth_failed);
+                            Status.setText(R.string.auth_failed);
                         }
                         //hideProgressDialog();
                         // [END_EXCLUDE]
@@ -163,20 +163,20 @@ public class Home extends AppCompatActivity {
     private boolean validateForm() {
         boolean valid = true;
 
-        String email = mEmailField.getText().toString();
+        String email = Email.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
+            Email.setError("Required.");
             valid = false;
         } else {
-            mEmailField.setError(null);
+            Email.setError(null);
         }
 
-        String password = mPasswordField.getText().toString();
+        String password = Password.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            mPasswordField.setError("Required.");
+            Password.setError("Required.");
             valid = false;
         } else {
-            mPasswordField.setError(null);
+            Password.setError(null);
         }
 
         return valid;
@@ -185,8 +185,7 @@ public class Home extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
         if (user != null) {
-            //mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
-            //        user.getEmail(), user.isEmailVerified()));
+            Status.setText(getString(R.string.emailpassword_status_fmt, user.getEmail(), user.isEmailVerified()));
             //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
 
             //findViewById(R.id.emailPasswordButtons).setVisibility(View.GONE);
@@ -195,8 +194,8 @@ public class Home extends AppCompatActivity {
 
             //findViewById(R.id.verifyEmailButton).setEnabled(!user.isEmailVerified());
         } else {
-           // mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
+            Status.setText(R.string.signed_out);
+            //mDetailTextView.setText(null);
 
             //findViewById(R.id.emailPasswordButtons).setVisibility(View.VISIBLE);
             //findViewById(R.id.emailPasswordFields).setVisibility(View.VISIBLE);
@@ -205,12 +204,12 @@ public class Home extends AppCompatActivity {
     }
 
     public void onClick(View v) {
-        /*int i = v.getId();
-        if (i == R.id.emailCreateAccountButton) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.emailSignInButton) {
-            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.signOutButton) {
+        int i = v.getId();
+        if (i == R.id.Create) {
+            createAccount(Email.getText().toString(), Password.getText().toString());
+        } else if (i == R.id.Submit) {
+            signIn(Email.getText().toString(), Password.getText().toString());
+        } /*else if (i == R.id.signOutButton) {
             signOut();
         } else if (i == R.id.verifyEmailButton) {
             sendEmailVerification();
