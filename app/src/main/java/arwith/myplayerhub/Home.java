@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,8 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.view.Change;
 
 public class Home extends AppCompatActivity implements View.OnClickListener {
 
@@ -114,7 +112,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                             updateUI(user);
 
                             //Enter App
-                            enterApp();
+                            checkName();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -134,12 +132,22 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         // [END sign_in_with_email]
     }
 
-    private void enterApp() {
+    private void enterApp(String username) {
         //Enter App
         Intent intent = new Intent(this, ProfileDisplay.class);
-        String userID = mAuth.getUid();
-        intent.putExtra("arwith.myplayerhub.HOME", userID);
+
+        intent.putExtra("displayName", username);
         startActivity(intent);
+    }
+
+    private void checkName() {
+        String username = mAuth.getCurrentUser().getDisplayName();
+        if(username == "" || username == null) {
+            Intent intent = new Intent(this, ChangeUsername.class);
+            startActivity(intent);
+        } else {
+            enterApp(username);
+        }
     }
 
     private void signOut() {
@@ -221,6 +229,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.Create) {

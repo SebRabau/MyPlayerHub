@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileDisplay"></activity>
+        <activity android:name=".ChangeUsername"></activity>
+        <activity android:name=".ProfileDisplay" />
         <activity android:name=".Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,10 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CreateProfile"
-            android:label="@string/title_activity_create_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
