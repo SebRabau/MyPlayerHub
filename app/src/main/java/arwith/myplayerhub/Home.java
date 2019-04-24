@@ -1,5 +1,6 @@
 package arwith.myplayerhub;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,12 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Home extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "Home";
 
     private FirebaseAuth mAuth;
+
 
     private TextView Status;
     private EditText Email;
@@ -54,6 +58,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void createAccount(String email, String password) {
+
+
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
@@ -88,6 +94,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void signIn(String email, String password) {
+
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
@@ -105,6 +112,9 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+
+                            //Enter App
+                            enterApp();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -122,6 +132,14 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                     }
                 });
         // [END sign_in_with_email]
+    }
+
+    private void enterApp() {
+        //Enter App
+        Intent intent = new Intent(this, ProfileDisplay.class);
+        String userID = mAuth.getUid();
+        intent.putExtra("arwith.myplayerhub.HOME", userID);
+        startActivity(intent);
     }
 
     private void signOut() {
