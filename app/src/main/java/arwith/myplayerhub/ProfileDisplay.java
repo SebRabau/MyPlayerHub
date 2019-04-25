@@ -1,5 +1,6 @@
 package arwith.myplayerhub;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.support.annotation.ColorInt;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -21,6 +23,9 @@ import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,6 +46,9 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
     private int steamNum = 0;
 
     private ConstraintLayout mainLayout;
+
+    //Database
+    private DatabaseReference mDatabase;
 
 
     @Override
@@ -75,6 +83,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         popup.setFocusable(true);
         newCardPopup.setFocusable(true);
         mainLayout.setFocusable(true);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -152,7 +162,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
                     bnetNum,
                     Color.rgb(65, 105, 225),
                     isLinked,
-                    newCardLink.getText().toString()
+                    newCardLink.getText().toString(),
+                    true
             );
 
             cardList.addView(card);
@@ -168,7 +179,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
                     epicNum,
                     Color.GRAY,
                     isLinked,
-                    newCardLink.getText().toString()
+                    newCardLink.getText().toString(),
+                    true
             );
 
             cardList.addView(card);
@@ -184,7 +196,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
                     originNum,
                     Color.rgb(255, 165, 0),
                     isLinked,
-                    newCardLink.getText().toString()
+                    newCardLink.getText().toString(),
+                    true
             );
 
             cardList.addView(card);
@@ -200,7 +213,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
                     steamNum,
                     Color.BLACK,
                     isLinked,
-                    newCardLink.getText().toString()
+                    newCardLink.getText().toString(),
+                    true
             );
 
             cardList.addView(card);
@@ -211,10 +225,12 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         newCardPopup.setVisibility(View.GONE);
         newCardLink.setText("");
         newCardInfo.setText("");
+
+        hideKeyboardFrom(this, mainLayout);
     }
 
-    private LinearLayout createCard(String accountType, String accountInfo, int cardID, int backCol, boolean isLinked, String link) {
-        LinearLayout card = new LinearLayout(this);
+    private LinearLayout createCard(final String accountType, final String accountInfo, int cardID, int backCol, boolean isLinked, String link, boolean deleter) {
+        final LinearLayout card = new LinearLayout(this);
         card.setBackgroundColor(backCol);
         card.setOrientation(LinearLayout.VERTICAL);
         card.setPadding(5,5,0,5);
@@ -261,6 +277,43 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             card.addView(profileLink);
         }
 
+        if(deleter) {
+            Button deleteCard = new Button(this);
+            deleteCard.setText("!^^ DELETE ^^!");
+            deleteCard.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            deleteCard.setPadding(0,0,0,0);
+            deleteCard.setBackgroundColor(Color.RED);
+            deleteCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cardList.removeView(card);
+
+                    if(accountType == "Steam") {
+                        steamNum--;
+                    } else if(accountType == "BattleNet") {
+                        bnetNum--;
+                    } else if(accountType == "Origin") {
+                        originNum--;
+                    } else if(accountType == "Epic Games") {
+                        epicNum--;
+                    }
+
+                    //Remove from database
+                }
+            });
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 60);
+            deleteCard.setLayoutParams(params);
+
+            card.addView(deleteCard);
+        }
+
+
         return card;
+    }
+
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
