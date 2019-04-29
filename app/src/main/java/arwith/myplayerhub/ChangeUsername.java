@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ChangeUsername extends AppCompatActivity implements View.OnClickListener{
 
@@ -32,11 +33,13 @@ public class ChangeUsername extends AppCompatActivity implements View.OnClickLis
             } else {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(newUsername.getText().toString()).build();
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(newUsername.getText().toString().trim()).build();
                 user.updateProfile(profileUpdates);
 
+                FirebaseDatabase.getInstance().getReference().child("profiles").child(user.getUid()).child("username").setValue(newUsername.getText().toString().trim());
+
                 Intent intent = new Intent(this, ProfileDisplay.class);
-                intent.putExtra("displayName", newUsername.getText().toString());
+                intent.putExtra("displayName", newUsername.getText().toString().trim());
                 startActivity(intent);
             }
         }

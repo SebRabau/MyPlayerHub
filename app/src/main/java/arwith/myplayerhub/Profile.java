@@ -2,54 +2,92 @@ package arwith.myplayerhub;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Profile {
 
     public String username;
     public String email;
-
-    public FirebaseDatabase database;
-
-    private String TAG = "Profile";
+    public List<Card> cards;
 
     public Profile() {
-
+        this.username = "";
+        this.email = "";
+        this.cards = new ArrayList<>();
     }
 
-    public Profile(String username, String email) {
+    public Profile(String username, String email, List<Card> cards) {
         this.username = username;
         this.email = email;
+        this.cards = cards;
     }
 
-    public void checkOrAddProfile(String username, String email) {
-        database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("Accounts");
+    public Profile getProfile(final String userID) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("profiles");
 
-        ref.setValue("email");
+        final Profile profile = new Profile();
 
-        // Read from the database
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
+                if(dataSnapshot.child(userID).exists()) {
+                    //returning user
+                    profile.username = (String) dataSnapshot.child(userID).child("username").getValue();
+                    profile.email = (String) dataSnapshot.child(userID).child("email").getValue();
+
+                    List<Card> cardList = new ArrayList<>();
+
+                    for(DataSnapshot data: dataSnapshot.child(userID).child("info").getChildren()) {
+                        Card newCard = new Card(
+                                (String) data.child("accountType").getValue(),
+                                (String) data.child("accountInfo").getValue(),
+                                ((Long) data.child("cardID").getValue()).intValue(),
+                                ((Long) data.child("backCol").getValue()).intValue(),
+                                (boolean) data.child("isLinked").getValue(),
+                                (String) data.child("link").getValue(),
+                                (boolean) data.child("deleter").getValue()
+                                );
+                        cardList.add(newCard);
+                    }
+
+                    profile.cards = cardList;
+
+                } else {
+                    //new user
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("profiles");
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    profile.username = mAuth.getCurrentUser().getDisplayName();
+                    profile.email = mAuth.getCurrentUser().getEmail();
+                    ref.child(userID).setValue(profile);
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
+                Log.w("Profile", "Failed to read value.", error.toException());
             }
         });
+
+        return profile;
     }
 
+    public void addCard(String userID, Card card) {
+        this.cards.add(card);
+        FirebaseDatabase.getInstance().getReference().child("profiles").child(userID).child("info").setValue(this.cards);
+    }
 
+    public void removeCard(String userID, Card card) {
+        this.cards.remove(card);
+        FirebaseDatabase.getInstance().getReference().child("profiles").child(userID).child("info").setValue(this.cards);
+    }
 }

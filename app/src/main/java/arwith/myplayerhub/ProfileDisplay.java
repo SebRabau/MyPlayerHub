@@ -5,30 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.inputmethodservice.Keyboard;
 import android.net.Uri;
-import android.os.Debug;
-import android.support.annotation.ColorInt;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.List;
 
 public class ProfileDisplay extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,7 +42,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
     private ConstraintLayout mainLayout;
 
     //Database
-    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private Profile userProfile = new Profile();
 
 
     @Override
@@ -84,7 +79,15 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         newCardPopup.setFocusable(true);
         mainLayout.setFocusable(true);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+
+        userProfile = userProfile.getProfile(mAuth.getCurrentUser().getUid());
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                displayCards(userProfile.cards);
+            }
+        }, 3000);
     }
 
     @Override
@@ -93,6 +96,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
 
         TextView usernameText = findViewById(R.id.Username);
         usernameText.setText(displayname);
+        displayCards(userProfile.cards);
     }
 
     @Override
@@ -235,6 +239,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         card.setOrientation(LinearLayout.VERTICAL);
         card.setPadding(5,5,0,5);
 
+        final Card dbCard = new Card(accountType, accountInfo, cardID, backCol, isLinked, link, deleter);
+
         TextView type = new TextView(this);
         if(cardID > 1) {
             type.setText(accountType+" "+cardID);
@@ -246,7 +252,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         type.setTypeface(Typeface.DEFAULT_BOLD);
 
         TextView info = new TextView(this);
-        info.setText(accountInfo);
+        info.setText(accountInfo.trim());
         info.setTextSize(18);
         info.setTextColor(Color.WHITE);
 
@@ -254,7 +260,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         card.addView(info);
 
         if(isLinked && link != "") {
-            final String accountLink = link;
+            final String accountLink = link.trim();
 
             Button profileLink = new Button(this);
             profileLink.setText("GO TO PROFILE");
@@ -286,8 +292,6 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             deleteCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    cardList.removeView(card);
-
                     if(accountType == "Steam") {
                         steamNum--;
                     } else if(accountType == "BattleNet") {
@@ -298,7 +302,11 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
                         epicNum--;
                     }
 
-                    //Remove from database
+                    userProfile.removeCard(mAuth.getCurrentUser().getUid(), dbCard);
+
+                    cardList.removeView(card);
+
+
                 }
             });
 
@@ -309,7 +317,85 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         }
 
 
+
+        userProfile.addCard(mAuth.getCurrentUser().getUid(), dbCard);
         return card;
+    }
+
+    private void createCard(final Card dbCard) {
+        final LinearLayout card = new LinearLayout(this);
+        card.setBackgroundColor(dbCard.backCol);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setPadding(5,5,0,5);
+
+        TextView type = new TextView(this);
+        type.setText(dbCard.accountType);
+        type.setTextSize(18);
+        type.setTextColor(Color.WHITE);
+        type.setTypeface(Typeface.DEFAULT_BOLD);
+
+        TextView info = new TextView(this);
+        info.setText(dbCard.accountInfo.trim());
+        info.setTextSize(18);
+        info.setTextColor(Color.WHITE);
+
+        card.addView(type);
+        card.addView(info);
+
+        if(dbCard.isLinked && dbCard.link != "") {
+            final String accountLink = dbCard.link.trim();
+
+            Button profileLink = new Button(this);
+            profileLink.setText("GO TO PROFILE");
+            profileLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    try {
+                        String url = URLUtil.guessUrl(accountLink);
+                        Uri uriUrl = Uri.parse(url);
+                        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                        startActivity(launchBrowser);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            card.addView(profileLink);
+        }
+
+        if(dbCard.deleter) {
+            Button deleteCard = new Button(this);
+            deleteCard.setText("!^^ DELETE ^^!");
+            deleteCard.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            deleteCard.setPadding(0,0,0,0);
+            deleteCard.setBackgroundColor(Color.RED);
+            deleteCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    userProfile.removeCard(mAuth.getCurrentUser().getUid(), dbCard);
+
+                    cardList.removeView(card);
+                }
+            });
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 60);
+            deleteCard.setLayoutParams(params);
+
+            card.addView(deleteCard);
+        }
+
+        cardList.addView(card);
+    }
+
+    public void displayCards(List<Card> list) {
+        if(list != null && !list.isEmpty()) {
+            for(int i=0; i<list.size(); i++) {
+                createCard(list.get(i));
+            }
+        }
     }
 
     public static void hideKeyboardFrom(Context context, View view) {
