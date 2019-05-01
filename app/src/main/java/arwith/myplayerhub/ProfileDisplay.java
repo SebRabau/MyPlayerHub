@@ -20,7 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -75,9 +77,9 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         popup.setVisibility(View.GONE);
         newCardPopup.setVisibility(View.GONE);
 
-        popup.setFocusable(true);
-        newCardPopup.setFocusable(true);
-        mainLayout.setFocusable(true);
+//        popup.setFocusable(true);
+//        newCardPopup.setFocusable(true);
+//        mainLayout.setFocusable(true);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -146,6 +148,12 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             mainLayout.requestFocus();
 
         } else if(i == R.id.changeUsername) {
+            FirebaseDatabase.getInstance().getReference().child("usernames").child(mAuth.getCurrentUser().getDisplayName()).removeValue();
+            FirebaseDatabase.getInstance().getReference().child("profiles").child(mAuth.getCurrentUser().getUid()).child("username").setValue("CHANGE_USERNAME");
+
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName("CHANGE_USERNAME").build();
+            mAuth.getCurrentUser().updateProfile(profileUpdates);
+
             Intent intent = new Intent(this, ChangeUsername.class);
             startActivity(intent);
         }
