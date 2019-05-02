@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.core.view.Change;
 
 public class Home extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,8 +42,6 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
         findViewById(R.id.Submit).setOnClickListener(this);
         findViewById(R.id.Create).setOnClickListener(this);
-        //findViewById(R.id.signOutButton).setOnClickListener(this);
-        //findViewById(R.id.verifyEmailButton).setOnClickListener(this);
     }
 
     @Override
@@ -63,9 +60,6 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
-        //showProgressDialog();
-
-        // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -76,8 +70,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
 
-                            //Enter App
-                            checkName();
+                            //Send Verification Email
+                            sendEmailVerification();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -85,13 +79,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
-                        // [START_EXCLUDE]
-                        //hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
-        // [END create_user_with_email]
     }
 
     private void signIn(String email, String password) {
@@ -101,9 +90,6 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
-        //showProgressDialog();
-
-        // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -114,8 +100,15 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
 
-                            //Enter App
-                            checkName();
+                            if(user.isEmailVerified()) {
+                                //Enter App
+                                checkName();
+                            } else {
+                                Toast.makeText(Home.this, "Email Verification Required. Re-Sending Email",
+                                        Toast.LENGTH_SHORT).show();
+                                sendEmailVerification();
+                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -124,15 +117,11 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                             updateUI(null);
                         }
 
-                        // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
                             Status.setText(R.string.auth_failed);
                         }
-                        //hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
-        // [END sign_in_with_email]
     }
 
     private void enterApp(String username) {
@@ -153,25 +142,16 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private void signOut() {
-        mAuth.signOut();
-        updateUI(null);
-    }
-
     private void sendEmailVerification() {
-        // Disable button
-        //findViewById(R.id.verifyEmailButton).setEnabled(false);
+        Toast.makeText(Home.this, "Sending Verification Email.",
+                Toast.LENGTH_SHORT).show();
 
         // Send verification email
-        // [START send_email_verification]
         final FirebaseUser user = mAuth.getCurrentUser();
         user.sendEmailVerification()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // [START_EXCLUDE]
-                        // Re-enable button
-                        //findViewById(R.id.verifyEmailButton).setEnabled(true);
 
                         if (task.isSuccessful()) {
                             Toast.makeText(Home.this,
@@ -183,10 +163,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                                     "Failed to send verification email.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                        // [END_EXCLUDE]
                     }
                 });
-        // [END send_email_verification]
     }
 
     private boolean validateForm() {
@@ -212,23 +190,14 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void updateUI(FirebaseUser user) {
-        //hideProgressDialog();
+        Status.setVisibility(View.VISIBLE);
+
         if (user != null) {
             Status.setText(getString(R.string.emailpassword_status_fmt, user.getEmail(), user.isEmailVerified()));
             //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-
-            //findViewById(R.id.emailPasswordButtons).setVisibility(View.GONE);
-            //findViewById(R.id.emailPasswordFields).setVisibility(View.GONE);
-            //findViewById(R.id.signedInButtons).setVisibility(View.VISIBLE);
-
-            //findViewById(R.id.verifyEmailButton).setEnabled(!user.isEmailVerified());
         } else {
             Status.setText(R.string.signed_out);
             //mDetailTextView.setText(null);
-
-            //findViewById(R.id.emailPasswordButtons).setVisibility(View.VISIBLE);
-            //findViewById(R.id.emailPasswordFields).setVisibility(View.VISIBLE);
-            //findViewById(R.id.signedInButtons).setVisibility(View.GONE);
         }
     }
 
