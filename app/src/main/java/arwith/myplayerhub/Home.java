@@ -208,10 +208,6 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             createAccount(Email.getText().toString(), Password.getText().toString());
         } else if (i == R.id.Submit) {
             signIn(Email.getText().toString(), Password.getText().toString());
-        } /*else if (i == R.id.signOutButton) {
-            signOut();
-        } else if (i == R.id.verifyEmailButton) {
-            sendEmailVerification();
-        }*/
+        }
     }
 }
