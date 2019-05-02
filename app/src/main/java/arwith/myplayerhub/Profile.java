@@ -90,11 +90,7 @@ public class Profile {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()) {
-                    Log.d("DBUSER", data.toString());
-                    Log.d("DBNAME", (String) data.child("username").getValue());
                     if(data.child("username").getValue().equals(username)) {
-
-                        Log.d("FOUND", "User Found");
 
                         List<Card> cardList = new ArrayList<>();
 
@@ -109,11 +105,9 @@ public class Profile {
                                     false
                             );
 
-                            Log.d("THECARD", newCard.accountType);
                             cardList.add(newCard);
                         }
 
-                        Log.d("APPENDLISTLENGTH", ""+cardList.size());
 
                         profileOther.username = (String) data.child("username").getValue();
                         profileOther.cards = cardList;
@@ -129,7 +123,6 @@ public class Profile {
             }
         });
 
-        Log.d("RETURNING", "Returning profile: "+profileOther.username);
         return profileOther;
     }
 

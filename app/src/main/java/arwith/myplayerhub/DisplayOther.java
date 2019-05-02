@@ -47,7 +47,6 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("DISPLAYING", "Displaying Cards: "+otherFinal.cards.size());
                 displayCards(otherFinal.cards);
             }
         }, 3000);
@@ -112,10 +111,8 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
     }
 
     public void displayCards(List<Card> list) {
-        Log.d("CARDLISTLENGTH", ""+list.size());
         if(list != null && !list.isEmpty()) {
             for(int i=0; i<list.size(); i++) {
-                Log.d("DISPLAY", "Displaying a Card");
                 createCard(list.get(i));
             }
         }
