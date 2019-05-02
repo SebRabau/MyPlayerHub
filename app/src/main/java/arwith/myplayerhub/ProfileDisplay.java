@@ -247,8 +247,6 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             cardList.addView(card);
         }
 
-        //SAVE TO DATABASE
-
         newCardPopup.setVisibility(View.GONE);
         newCardLink.setText("");
         newCardInfo.setText("");
