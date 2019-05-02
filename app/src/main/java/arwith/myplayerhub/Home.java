@@ -145,7 +145,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
     private void checkName() {
         String username = mAuth.getCurrentUser().getDisplayName();
-        if(username.equals("") || username == null || username.equals("CHANGE_USERNAME")) {
+        if(username == null || username.equals("") ||  username.equals("CHANGE_USERNAME")) {
             Intent intent = new Intent(this, ChangeUsername.class);
             startActivity(intent);
         } else {

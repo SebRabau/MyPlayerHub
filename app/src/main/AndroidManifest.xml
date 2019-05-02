@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChangeUsername"></activity>
+        <activity android:name=".DisplayOther"></activity>
+        <activity android:name=".ChangeUsername" />
         <activity android:name=".ProfileDisplay" />
         <activity android:name=".Home">
             <intent-filter>

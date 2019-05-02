@@ -81,6 +81,58 @@ public class Profile {
         return profile;
     }
 
+    public Profile getOtherProfile(final String username) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("profiles");
+
+        final Profile profileOther = new Profile();
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()) {
+                    Log.d("DBUSER", data.toString());
+                    Log.d("DBNAME", (String) data.child("username").getValue());
+                    if(data.child("username").getValue().equals(username)) {
+
+                        Log.d("FOUND", "User Found");
+
+                        List<Card> cardList = new ArrayList<>();
+
+                        for(DataSnapshot dataC: data.child("info").getChildren()) {
+                            Card newCard = new Card(
+                                    (String) dataC.child("accountType").getValue(),
+                                    (String) dataC.child("accountInfo").getValue(),
+                                    ((Long) dataC.child("cardID").getValue()).intValue(),
+                                    ((Long) dataC.child("backCol").getValue()).intValue(),
+                                    (boolean) dataC.child("isLinked").getValue(),
+                                    (String) dataC.child("link").getValue(),
+                                    false
+                            );
+
+                            Log.d("THECARD", newCard.accountType);
+                            cardList.add(newCard);
+                        }
+
+                        Log.d("APPENDLISTLENGTH", ""+cardList.size());
+
+                        profileOther.username = (String) data.child("username").getValue();
+                        profileOther.cards = cardList;
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Profile", "Failed to read value.", error.toException());
+            }
+        });
+
+        Log.d("RETURNING", "Returning profile: "+profileOther.username);
+        return profileOther;
+    }
+
     public void addCard(String userID, Card card) {
         this.cards.add(card);
         FirebaseDatabase.getInstance().getReference().child("profiles").child(userID).child("info").setValue(this.cards);

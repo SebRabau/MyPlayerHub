@@ -17,6 +17,7 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,12 +75,25 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         cardList = findViewById(R.id.cardList);
         mainLayout = findViewById(R.id.mainLayout);
 
+        SearchView searchView = findViewById(R.id.SearchBox);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent viewProfile = new Intent(ProfileDisplay.this, DisplayOther.class);
+                viewProfile.putExtra("otherUsername", query.trim());
+                startActivity(viewProfile);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
+            }
+        });
+
         popup.setVisibility(View.GONE);
         newCardPopup.setVisibility(View.GONE);
-
-//        popup.setFocusable(true);
-//        newCardPopup.setFocusable(true);
-//        mainLayout.setFocusable(true);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -87,6 +101,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
+                cardList.removeAllViews();
                 displayCards(userProfile.cards);
             }
         }, 3000);
