@@ -7,9 +7,11 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,7 +24,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 public class ProfileDisplay extends AppCompatActivity implements View.OnClickListener {
@@ -30,7 +36,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
     private String displayname = "Unknown User";
     private LinearLayout popup;
     private LinearLayout newCardPopup;
-    private LinearLayout cardList;
+    public LinearLayout cardList;
     private EditText newCardInfo;
     private EditText newCardLink;
     private int accountType;
@@ -96,7 +102,10 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
 
         mAuth = FirebaseAuth.getInstance();
 
+        String email = userProfile.email;
+
         userProfile = userProfile.getProfile(mAuth.getCurrentUser().getUid());
+
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -113,26 +122,6 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         TextView usernameText = findViewById(R.id.Username);
         usernameText.setText(displayname);
         displayCards(userProfile.cards);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        mAuth.signOut();
-
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        mAuth.signOut();
-
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
     }
 
     @Override

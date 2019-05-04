@@ -133,26 +133,6 @@ public class OWStatDisplay extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        FirebaseAuth.getInstance().signOut();
-
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        FirebaseAuth.getInstance().signOut();
-
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-    }
-
-    @Override
     public void onBackPressed() {
 
     }

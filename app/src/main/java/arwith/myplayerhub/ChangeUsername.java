@@ -83,26 +83,6 @@ public class ChangeUsername extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        FirebaseAuth.getInstance().signOut();
-
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        FirebaseAuth.getInstance().signOut();
-
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-    }
-
-    @Override
     public void onBackPressed() {
 
     }
