@@ -71,7 +71,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
         android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/private"
+        app:layout_constraintBottom_toTopOf="@+id/privateIMG"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"

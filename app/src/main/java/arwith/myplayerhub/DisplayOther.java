@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Button;
@@ -105,6 +103,39 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
             });
 
             card.addView(profileLink);
+        }
+
+        if(dbCard.accountType.equals("BattleNet")) {
+            Button OWStats = new Button(this);
+            OWStats.setText("OW Stats");
+            OWStats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    StringBuilder name = new StringBuilder();
+                    StringBuilder tag = new StringBuilder();
+                    boolean tagged = false;
+
+                    for(char c: dbCard.accountInfo.toCharArray()) {
+                        if(!tagged) {
+                            if(c == '#') {
+                                tagged = true;
+                            } else {
+                                name.append(c);
+                            }
+                        } else {
+                            tag.append(c);
+                        }
+                    }
+
+                    Intent intent = new Intent(DisplayOther.this, OWStatDisplay.class);
+                    intent.putExtra("name", name.toString());
+                    intent.putExtra("tag", tag.toString());
+                    startActivity(intent);
+                }
+            });
+
+            card.addView(OWStats);
         }
 
         cardList.addView(card);

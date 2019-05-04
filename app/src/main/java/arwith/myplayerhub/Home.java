@@ -53,10 +53,6 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
-
-        //TEMP DEBUG
-        Intent intent = new Intent(Home.this, OWStatDisplay.class);
-        startActivity(intent);
     }
 
     private void createAccount(String email, String password) {

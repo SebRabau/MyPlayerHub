@@ -22,10 +22,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.IOException;
 import java.util.List;
 
 public class ProfileDisplay extends AppCompatActivity implements View.OnClickListener {
@@ -265,7 +262,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
 
         TextView type = new TextView(this);
         if(cardID > 1) {
-            type.setText(accountType+" "+cardID);
+            type.setText(accountType);
         } else {
             type.setText(accountType);
         }
@@ -305,8 +302,42 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             card.addView(profileLink);
         }
 
+        if(accountType.equals("BattleNet")) {
+            Button OWStats = new Button(this);
+            OWStats.setText("OW Stats");
+            OWStats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    StringBuilder name = new StringBuilder();
+                    StringBuilder tag = new StringBuilder();
+                    boolean tagged = false;
+
+                    for(char c: accountInfo.toCharArray()) {
+                        if(!tagged) {
+                            if(c == '#') {
+                                tagged = true;
+                            } else {
+                                name.append(c);
+                            }
+                        } else {
+                            tag.append(c);
+                        }
+                    }
+
+                    Intent intent = new Intent(ProfileDisplay.this, OWStatDisplay.class);
+                    intent.putExtra("name", name.toString());
+                    intent.putExtra("tag", tag.toString());
+                    startActivity(intent);
+                }
+            });
+
+            card.addView(OWStats);
+        }
+
         if(deleter) {
             Button deleteCard = new Button(this);
+            deleteCard.setMaxWidth(100);
             deleteCard.setText("!^^ DELETE ^^!");
             deleteCard.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
             deleteCard.setPadding(0,0,0,0);
@@ -337,8 +368,6 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
 
             card.addView(deleteCard);
         }
-
-
 
         userProfile.addCard(mAuth.getCurrentUser().getUid(), dbCard);
         return card;
@@ -388,8 +417,42 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             card.addView(profileLink);
         }
 
+        if(dbCard.accountType.equals("BattleNet")) {
+            Button OWStats = new Button(this);
+            OWStats.setText("OW Stats");
+            OWStats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    StringBuilder name = new StringBuilder();
+                    StringBuilder tag = new StringBuilder();
+                    boolean tagged = false;
+
+                    for(char c: dbCard.accountInfo.toCharArray()) {
+                        if(!tagged) {
+                            if(c == '#') {
+                                tagged = true;
+                            } else {
+                                name.append(c);
+                            }
+                        } else {
+                            tag.append(c);
+                        }
+                    }
+
+                    Intent intent = new Intent(ProfileDisplay.this, OWStatDisplay.class);
+                    intent.putExtra("name", name.toString());
+                    intent.putExtra("tag", tag.toString());
+                    startActivity(intent);
+                }
+            });
+
+            card.addView(OWStats);
+        }
+
         if(dbCard.deleter) {
             Button deleteCard = new Button(this);
+            deleteCard.setMaxWidth(100);
             deleteCard.setText("!^^ DELETE ^^!");
             deleteCard.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
             deleteCard.setPadding(0,0,0,0);
@@ -397,9 +460,21 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             deleteCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(dbCard.accountType == "Steam") {
+                        steamNum--;
+                    } else if(dbCard.accountType == "BattleNet") {
+                        bnetNum--;
+                    } else if(dbCard.accountType == "Origin") {
+                        originNum--;
+                    } else if(dbCard.accountType == "Epic Games") {
+                        epicNum--;
+                    }
+
                     userProfile.removeCard(mAuth.getCurrentUser().getUid(), dbCard);
 
                     cardList.removeView(card);
+
+
                 }
             });
 

@@ -65,7 +65,7 @@ public class OWStatDisplay extends AppCompatActivity implements View.OnClickList
 
         OverwatchStatistics stats = new OverwatchStatistics();
         try {
-            overwatchStats = stats.downloadUserData("pc", "eu", "Arwithout", "2187");
+            overwatchStats = stats.downloadUserData("pc", "eu", getIntent().getStringExtra("name"), getIntent().getStringExtra("tag"));
         } catch (IOException e) {
             return;
         }
@@ -94,8 +94,14 @@ public class OWStatDisplay extends AppCompatActivity implements View.OnClickList
                 goldMedals.setText(Integer.toString(overwatchStats.getCompetitiveStats().getAwards().getMedalsGold()));
                 goldMedalRate.setText(decimalFormat.format(medalR));
 
-                icon.setImageBitmap(getBitmap(overwatchStats.getIcon()));
-                rank.setImageBitmap(getBitmap(overwatchStats.getRatingIcon()));
+                if(overwatchStats.getIcon() != "") {
+                    icon.setImageBitmap(getBitmap(overwatchStats.getIcon()));
+                }
+
+                if(overwatchStats.getRatingIcon() != "") {
+                    rank.setImageBitmap(getBitmap(overwatchStats.getRatingIcon()));
+                }
+
             } catch (Exception e) {
                 Log.e("SetStats", "Exception occured");
             }
