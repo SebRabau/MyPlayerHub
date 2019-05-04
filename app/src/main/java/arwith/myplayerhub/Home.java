@@ -213,4 +213,9 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             signIn(Email.getText().toString(), Password.getText().toString());
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

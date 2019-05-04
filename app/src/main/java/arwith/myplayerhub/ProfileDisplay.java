@@ -65,6 +65,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.addCard).setOnClickListener(this);
         findViewById(R.id.addCardSubmit).setOnClickListener(this);
         findViewById(R.id.closePopup2).setOnClickListener(this);
+        findViewById(R.id.signOutBtn).setOnClickListener(this);
 
         popup = findViewById(R.id.popup);
         newCardPopup = findViewById(R.id.cardPopup);
@@ -112,6 +113,31 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         TextView usernameText = findViewById(R.id.Username);
         usernameText.setText(displayname);
         displayCards(userProfile.cards);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mAuth.signOut();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        FirebaseAuth.getInstance().signOut();
+
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
     }
 
     @Override
@@ -168,6 +194,11 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             mAuth.getCurrentUser().updateProfile(profileUpdates);
 
             Intent intent = new Intent(this, ChangeUsername.class);
+            startActivity(intent);
+        } else if(i == R.id.signOutBtn) {
+            mAuth.signOut();
+
+            Intent intent = new Intent(this, Home.class);
             startActivity(intent);
         }
     }
@@ -498,5 +529,10 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

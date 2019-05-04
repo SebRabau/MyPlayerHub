@@ -61,6 +61,31 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        FirebaseAuth.getInstance().signOut();
+
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
+
     private void createCard(final Card dbCard) {
         final LinearLayout card = new LinearLayout(this);
         card.setBackgroundColor(dbCard.backCol);
@@ -147,5 +172,10 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
                 createCard(list.get(i));
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }
