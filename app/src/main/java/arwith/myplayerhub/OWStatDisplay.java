@@ -137,11 +137,6 @@ public class OWStatDisplay extends AppCompatActivity implements View.OnClickList
         super.onPause();
 
         FirebaseAuth.getInstance().signOut();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);

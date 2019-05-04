@@ -120,11 +120,6 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         super.onPause();
 
         mAuth.signOut();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
@@ -134,7 +129,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
     protected void onRestart() {
         super.onRestart();
 
-        FirebaseAuth.getInstance().signOut();
+        mAuth.signOut();
 
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);

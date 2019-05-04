@@ -66,11 +66,6 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
         super.onPause();
 
         FirebaseAuth.getInstance().signOut();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
