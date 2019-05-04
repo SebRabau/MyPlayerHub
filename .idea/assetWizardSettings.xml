@@ -61,10 +61,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundImage" value="F:\Android\Epic-Games-reveal-update-plans-for-the-remainder-of-2018.jpg" />
-                                      <entry key="backgroundLayerName" value="EpicGames_background" />
-                                      <entry key="foregroundImage" value="F:\Android\Epic-Games-reveal-update-plans-for-the-remainder-of-2018.jpg" />
-                                      <entry key="outputName" value="epicGames" />
+                                      <entry key="backgroundImage" value="C:\Users\strab\Pictures\private.png" />
+                                      <entry key="foregroundImage" value="C:\Users\strab\Pictures\private.png" />
+                                      <entry key="outputName" value="private" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -1,6 +1,7 @@
 package arwith.myplayerhub;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.IOException;
 
 public class Home extends AppCompatActivity implements View.OnClickListener {
 
@@ -50,6 +53,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+
+        //TEMP DEBUG
+        Intent intent = new Intent(Home.this, OWStatDisplay.class);
+        startActivity(intent);
     }
 
     private void createAccount(String email, String password) {
