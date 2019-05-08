@@ -19,34 +19,7 @@ import xyz.dodo.fortnite.entity.Stat;
 
 public class FNStatDisplay extends AppCompatActivity implements View.OnClickListener {
 
-    TextView name;
-    TextView soloS;
-    TextView duoS;
-    TextView squadS;
-
-    TextView soloWins;
-    TextView soloTth;
-    TextView soloTtn;
-    TextView soloWinpc;
-    TextView soloKD;
-    TextView soloKPG;
-    TextView soloKT;
-
-    TextView duoWins;
-    TextView duoTth;
-    TextView duoTtn;
-    TextView duoWinpc;
-    TextView duoKD;
-    TextView duoKPG;
-    TextView duoKT;
-
-    TextView squadWins;
-    TextView squadTth;
-    TextView squadTtn;
-    TextView squadWinpc;
-    TextView squadKD;
-    TextView squadKPG;
-    TextView squadKT;
+    TextView name, soloS, duoS, squadS, soloWins, soloTth, soloTtn, soloWinpc, soloKD, soloKPG, soloKT, duoWins, duoTth, duoTtn, duoWinpc, duoKD, duoKPG, duoKT, squadWins, squadTth, squadTtn, squadWinpc, squadKD, squadKPG, squadKT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
