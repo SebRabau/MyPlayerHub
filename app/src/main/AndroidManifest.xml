@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OWStatDisplay"></activity>
+        <activity android:name=".FNStatDisplay"></activity>
+        <activity android:name=".Fortnite.FortniteStats" />
+        <activity android:name=".OWStatDisplay" />
         <activity android:name=".DisplayOther" />
         <activity android:name=".ChangeUsername" />
         <activity android:name=".ProfileDisplay" />

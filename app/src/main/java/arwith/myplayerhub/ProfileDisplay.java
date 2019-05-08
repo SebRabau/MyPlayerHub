@@ -7,11 +7,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,10 +22,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -319,7 +314,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
 
         if(accountType.equals("BattleNet")) {
             Button OWStats = new Button(this);
-            OWStats.setText("OW Stats");
+            OWStats.setText("OW PC Stats");
             OWStats.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -348,6 +343,22 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             });
 
             card.addView(OWStats);
+        }
+
+        if(accountType.equals("Epic Games")) {
+            Button FNStats = new Button(this);
+            FNStats.setText("FN PC Stats");
+            FNStats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(ProfileDisplay.this, FNStatDisplay.class);
+                    intent.putExtra("epicName", accountInfo);
+                    startActivity(intent);
+                }
+            });
+
+            card.addView(FNStats);
         }
 
         if(deleter) {
@@ -434,7 +445,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
 
         if(dbCard.accountType.equals("BattleNet")) {
             Button OWStats = new Button(this);
-            OWStats.setText("OW Stats");
+            OWStats.setText("OW PC Stats");
             OWStats.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -463,6 +474,22 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             });
 
             card.addView(OWStats);
+        }
+
+        if(dbCard.accountType.equals("Epic Games")) {
+            Button FNStats = new Button(this);
+            FNStats.setText("FN PC Stats");
+            FNStats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(ProfileDisplay.this, FNStatDisplay.class);
+                    intent.putExtra("epicName", dbCard.accountInfo);
+                    startActivity(intent);
+                }
+            });
+
+            card.addView(FNStats);
         }
 
         if(dbCard.deleter) {

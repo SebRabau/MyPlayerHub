@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="arwith.myplayerhub.FNStatDisplay">
+
+    <Button
+        android:id="@+id/backButtonFNStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="BACK"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
+        android:layout_marginLeft="151dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginRight="105dp"
+        android:text="Fortnite Stats"
+        android:textColor="#FF5722"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.695"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="340dp"
+        android:layout_height="511dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView27">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Fortnite Name: "
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/fortniteName"
+                    android:layout_width="174dp"
+                    android:layout_height="wrap_content"
+                    android:text="fortniteName"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Solo Score:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/soloScore"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="soloScore"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Duo Score:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/duoScore"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="duoScore"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Squad Score:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/squadScore"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="squadScore"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Solo Wins:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/soloWins"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="soloWins"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Solo Top 3:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/soloTop3"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="soloTop3"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Solo Top 10:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/soloTop10"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="soloTop10"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Solo Win %:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/soloWinpc"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="soloWinpc"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Solo K/D:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/soloKD"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="soloKD"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Solo Kills/game:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/soloKPG"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="soloKPG"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Solo Kills Total:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/soloKillsT"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="soloKillsT"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Duo Wins:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/duoWins"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="duoWins"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Duo Top 3:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/duoTop3"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="duoTop3"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Duo Top 10:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/duoTop10"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="duoTop10"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Duo Win %:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/duoWinpc"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="duoWinpc"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Duo K/D:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/duoKD"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="duoKD"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Duo Kills/game:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/duoKPG"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="duoKPG"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Duo Kills Total:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/duoKillsT"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="duoKillsT"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Squad Wins:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/squadWins"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="squadWins"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Squad Top 3:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/squadTop3"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="squadTop3"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Squad Top 10:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/squadTop10"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="squadTop10"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Squad Win %:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/squadWinpc"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="squadWinpc"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Squad K/D:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/squadKD"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="squadKD"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Squad Kills/game:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/squadKPG"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="squadKPG"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Squad Kills Total:"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/squadKillsT"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="squadKillsT"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

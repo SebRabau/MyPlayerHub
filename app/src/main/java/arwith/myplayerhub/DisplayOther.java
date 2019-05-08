@@ -107,7 +107,7 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
 
         if(dbCard.accountType.equals("BattleNet")) {
             Button OWStats = new Button(this);
-            OWStats.setText("OW Stats");
+            OWStats.setText("OW PC Stats");
             OWStats.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -136,6 +136,22 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
             });
 
             card.addView(OWStats);
+        }
+
+        if(dbCard.accountType.equals("Epic Games")) {
+            Button FNStats = new Button(this);
+            FNStats.setText("FN PC Stats");
+            FNStats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(DisplayOther.this, FNStatDisplay.class);
+                    intent.putExtra("epicName", dbCard.accountInfo);
+                    startActivity(intent);
+                }
+            });
+
+            card.addView(FNStats);
         }
 
         cardList.addView(card);
