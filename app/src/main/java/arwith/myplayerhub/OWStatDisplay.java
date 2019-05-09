@@ -66,7 +66,9 @@ public class OWStatDisplay extends AppCompatActivity implements View.OnClickList
         OverwatchStatistics stats = new OverwatchStatistics();
         try {
             overwatchStats = stats.downloadUserData("pc", "eu", getIntent().getStringExtra("name"), getIntent().getStringExtra("tag"));
+            findViewById(R.id.notFoundOW).setVisibility(View.GONE);
         } catch (IOException e) {
+            findViewById(R.id.notFoundOW).setVisibility(View.VISIBLE);
             return;
         }
 
@@ -103,6 +105,7 @@ public class OWStatDisplay extends AppCompatActivity implements View.OnClickList
                 }
 
             } catch (Exception e) {
+                findViewById(R.id.notFoundOW).setVisibility(View.VISIBLE);
                 Log.e("SetStats", "Exception occured");
             }
         }
