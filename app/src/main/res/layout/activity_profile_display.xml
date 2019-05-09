@@ -44,19 +44,17 @@
     <ScrollView
         android:id="@+id/ScrollView"
         android:layout_width="0dp"
-        android:layout_height="431dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Username"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/Username">
 
         <LinearLayout
             android:id="@+id/cardList"
@@ -92,7 +90,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#424242"
+        android:background="#AAAAAA"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -161,14 +159,14 @@
             android:id="@+id/epicAdd"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#00000000"
+            android:background="#020202"
             app:srcCompat="@mipmap/epicgames_background" />
 
         <ImageButton
             android:id="@+id/originAdd"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#00FFFFFF"
+            android:background="#FFFFFF"
             android:scaleType="center"
             app:srcCompat="@mipmap/origin_background" />
 
@@ -176,7 +174,7 @@
             android:id="@+id/steamAdd"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#00000000"
+            android:background="#000000"
             android:cropToPadding="false"
             android:scaleType="center"
             app:srcCompat="@mipmap/steam_background" />
@@ -196,12 +194,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginBottom="8dp"
         android:text="Add Card"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ScrollView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/signOutBtn"
@@ -209,9 +205,10 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
         android:background="#92EE5353"
         android:text="Sign Out"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ScrollView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

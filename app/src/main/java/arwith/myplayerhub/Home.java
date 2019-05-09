@@ -45,6 +45,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
         findViewById(R.id.Submit).setOnClickListener(this);
         findViewById(R.id.Create).setOnClickListener(this);
+        findViewById(R.id.forgotPassword).setOnClickListener(this);
     }
 
     @Override
@@ -107,7 +108,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                                 //Enter App
                                 checkName();
                             } else {
-                                Toast.makeText(Home.this, "Email Verification Required. Re-Sending Email",
+                                Toast.makeText(Home.this, "Email Verification Required. Re-Sending Email.",
                                         Toast.LENGTH_SHORT).show();
                                 sendEmailVerification();
                             }
@@ -115,7 +116,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(Home.this, "Authentication failed.",
+                            Toast.makeText(Home.this, "Authentication failed. Check Email and Password are correct.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -211,6 +212,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             createAccount(Email.getText().toString(), Password.getText().toString());
         } else if (i == R.id.Submit) {
             signIn(Email.getText().toString(), Password.getText().toString());
+        } else if(i == R.id.forgotPassword) {
+            startActivity(new Intent(Home.this, forgotPassword.class));
         }
     }
 

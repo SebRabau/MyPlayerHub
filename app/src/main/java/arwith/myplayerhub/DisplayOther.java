@@ -105,7 +105,7 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
             card.addView(profileLink);
         }
 
-        if(dbCard.accountType.equals("BattleNet")) {
+        if(dbCard.accountType.equals("BattleNet") && dbCard.accountInfo.contains("#")) {
             Button OWStats = new Button(this);
             OWStats.setText("OW PC Stats");
             OWStats.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +158,7 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
     }
 
     public void displayCards(List<Card> list) {
+        cardList.removeAllViews();
         if(list != null && !list.isEmpty()) {
             for(int i=0; i<list.size(); i++) {
                 createCard(list.get(i));

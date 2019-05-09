@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -31,15 +32,25 @@ public class ChangeUsername extends AppCompatActivity implements View.OnClickLis
         newUsername = findViewById(R.id.newUsername);
 
         findViewById(R.id.UsernameInUse).setVisibility(View.GONE);
+        findViewById(R.id.invalidUsername).setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.EnterApp) {
-            if(newUsername.getText().toString() == "") {
+            //Check for spaces/symbols and length
+            if(TextUtils.isEmpty(newUsername.getText())) {
+                newUsername.setError("Required.");
                 return;
             } else {
+
+                if((TextUtils.isDigitsOnly(newUsername.getText())) ||(newUsername.getText().toString().length() > 12) || !(newUsername.getText().toString().matches("^[a-zA-Z0-9]*$"))) {
+                    findViewById(R.id.invalidUsername).setVisibility(View.VISIBLE);
+                    return;
+                }
+                newUsername.setError(null);
+
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("usernames");
 
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {

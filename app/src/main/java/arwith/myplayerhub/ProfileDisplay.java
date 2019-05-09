@@ -134,6 +134,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
 
         } else if(i == R.id.closePopup2) {
             newCardPopup.setVisibility((View.GONE));
+            newCardInfo.setText("");
+            newCardLink.setText("");
             mainLayout.requestFocus();
 
         } else if(i == R.id.bnetAdd) {
@@ -312,7 +314,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             card.addView(profileLink);
         }
 
-        if(accountType.equals("BattleNet")) {
+        if(accountType.equals("BattleNet") && accountInfo.contains("#")) {
             Button OWStats = new Button(this);
             OWStats.setText("OW PC Stats");
             OWStats.setOnClickListener(new View.OnClickListener() {
@@ -443,7 +445,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             card.addView(profileLink);
         }
 
-        if(dbCard.accountType.equals("BattleNet")) {
+        if(dbCard.accountType.equals("BattleNet") && dbCard.accountInfo.contains("#")) {
             Button OWStats = new Button(this);
             OWStats.setText("OW PC Stats");
             OWStats.setOnClickListener(new View.OnClickListener() {
@@ -530,6 +532,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
     }
 
     public void displayCards(List<Card> list) {
+        cardList.removeAllViews();
         if(list != null && !list.isEmpty()) {
             for(int i=0; i<list.size(); i++) {
                 createCard(list.get(i));
