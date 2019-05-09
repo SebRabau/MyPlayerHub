@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -22,6 +28,7 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
     String otherUsername;
     TextView username;
     LinearLayout cardList;
+    Profile other;
 
 
     @Override
@@ -33,11 +40,40 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
         otherUsername = intent.getStringExtra("otherUsername");
 
         findViewById(R.id.backButton).setOnClickListener(this);
+        findViewById(R.id.refresh2).setOnClickListener(this);
+
         cardList = findViewById(R.id.cardListOther);
         username = findViewById(R.id.UsernameOther);
         username.setText(otherUsername);
 
-        Profile other = new Profile();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("usernames");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               boolean taken = false;
+
+               for (DataSnapshot data : dataSnapshot.getChildren()) {
+                   if (data.getValue().equals(otherUsername.trim())) {
+                       taken = true;
+                       break;
+                   }
+               }
+
+               if(!taken) {
+                   findViewById(R.id.notFound).setVisibility(View.VISIBLE);
+               } else {
+                   findViewById(R.id.notFound).setVisibility(View.GONE);
+               }
+           }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+       });
+
+        other = new Profile();
         other = other.getOtherProfile(otherUsername);
 
         final Profile otherFinal = other;
@@ -58,6 +94,9 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(DisplayOther.this, ProfileDisplay.class);
             intent.putExtra("displayName", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
             startActivity(intent);
+        } else if(i == R.id.backButton) {
+            cardList.removeAllViews();
+            displayCards(other.cards);
         }
     }
 

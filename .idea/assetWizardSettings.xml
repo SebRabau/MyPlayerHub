@@ -61,9 +61,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundImage" value="C:\Users\strab\Desktop\addCard.png" />
-                                      <entry key="foregroundImage" value="C:\Users\strab\Desktop\addCard.png" />
-                                      <entry key="outputName" value="addcard" />
+                                      <entry key="backgroundImage" value="C:\Users\strab\Desktop\notfound.png" />
+                                      <entry key="foregroundImage" value="C:\Users\strab\Desktop\notfound.png" />
+                                      <entry key="outputName" value="notfound" />
                                     </map>
                                   </option>
                                 </PersistentState>

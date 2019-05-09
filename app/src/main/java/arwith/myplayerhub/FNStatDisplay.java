@@ -37,7 +37,7 @@ public class FNStatDisplay extends AppCompatActivity implements View.OnClickList
         FortniteData fortniteData = fortnite.getPlayerInfo("pc", getIntent().getStringExtra("epicName"));
 
         if(fortniteData.getResult().isOk()) {
-            Log.d("FNTEST", fortniteData.getLeague(League.Mode.solo_current).getStats().toString());
+            findViewById(R.id.notFoundFN).setVisibility(View.GONE);
 
             List<Stat> soloStats = fortniteData.getLeague(League.Mode.solo).getStats();
             List<Stat> duoStats = fortniteData.getLeague(League.Mode.duo).getStats();
@@ -72,6 +72,8 @@ public class FNStatDisplay extends AppCompatActivity implements View.OnClickList
             squadKD.setText(squadStats.get(8).getValue());
             squadKPG.setText(squadStats.get(12).getValue());
             squadKT.setText(squadStats.get(11).getValue());
+        } else {
+            findViewById(R.id.notFoundFN).setVisibility(View.VISIBLE);
         }
     }
 

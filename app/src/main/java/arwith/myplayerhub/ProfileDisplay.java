@@ -67,6 +67,7 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.addCardSubmit).setOnClickListener(this);
         findViewById(R.id.closePopup2).setOnClickListener(this);
         findViewById(R.id.signOutBtn).setOnClickListener(this);
+        findViewById(R.id.refresh).setOnClickListener(this);
 
         popup = findViewById(R.id.popup);
         newCardPopup = findViewById(R.id.cardPopup);
@@ -181,6 +182,9 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
 
             Intent intent = new Intent(this, Home.class);
             startActivity(intent);
+        } else if(i == R.id.refresh) {
+            cardList.removeAllViews();
+            displayCards(userProfile.cards);
         }
     }
 

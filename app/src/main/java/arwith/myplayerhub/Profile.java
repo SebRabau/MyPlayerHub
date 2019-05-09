@@ -112,7 +112,7 @@ public class Profile {
 
                         profileOther.username = (String) data.child("username").getValue();
                         profileOther.cards = cardList;
-                        break;
+                        return;
                     }
                 }
             }
