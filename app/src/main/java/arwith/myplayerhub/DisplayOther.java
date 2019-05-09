@@ -60,7 +60,7 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
                    }
                }
 
-               if(!taken) {
+               if(taken) {
                    findViewById(R.id.notFound).setVisibility(View.VISIBLE);
                } else {
                    findViewById(R.id.notFound).setVisibility(View.GONE);
