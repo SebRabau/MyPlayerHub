@@ -257,6 +257,8 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
             cardList.addView(card);
         }
 
+        findViewById(R.id.addcardimg).setVisibility(View.GONE);
+
         newCardPopup.setVisibility(View.GONE);
         newCardLink.setText("");
         newCardInfo.setText("");
@@ -532,6 +534,9 @@ public class ProfileDisplay extends AppCompatActivity implements View.OnClickLis
     }
 
     public void displayCards(List<Card> list) {
+        if(!list.isEmpty()) {
+            findViewById(R.id.addcardimg).setVisibility(View.GONE);
+        }
         cardList.removeAllViews();
         if(list != null && !list.isEmpty()) {
             for(int i=0; i<list.size(); i++) {
