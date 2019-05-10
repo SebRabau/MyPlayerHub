@@ -51,7 +51,7 @@ public class ChangeUsername extends AppCompatActivity implements View.OnClickLis
                 }
                 newUsername.setError(null);
 
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("usernames");
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("profiles");
 
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -59,7 +59,7 @@ public class ChangeUsername extends AppCompatActivity implements View.OnClickLis
                         boolean taken = false;
 
                         for(DataSnapshot data: dataSnapshot.getChildren()) {
-                            if(data.getValue().equals(newUsername.getText().toString().trim())) {
+                            if(data.child("username").getValue().equals(newUsername.getText().toString().trim())) {
                                 taken = true;
                                 break;
                             }
@@ -73,7 +73,6 @@ public class ChangeUsername extends AppCompatActivity implements View.OnClickLis
 
                             FirebaseDatabase.getInstance().getReference().child("profiles").child(user.getUid()).child("username").setValue(newUsername.getText().toString().trim());
                             FirebaseDatabase.getInstance().getReference().child("profiles").child(user.getUid()).child("email").setValue(user.getEmail());
-                            FirebaseDatabase.getInstance().getReference().child("usernames").child(newUsername.getText().toString()).setValue(newUsername.getText().toString());
 
                             Intent intent = new Intent(ChangeUsername.this, ProfileDisplay.class);
                             intent.putExtra("displayName", newUsername.getText().toString().trim());

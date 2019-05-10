@@ -46,7 +46,7 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
         username = findViewById(R.id.UsernameOther);
         username.setText(otherUsername);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("usernames");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("profiles");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
@@ -54,7 +54,7 @@ public class DisplayOther extends AppCompatActivity implements View.OnClickListe
                boolean taken = false;
 
                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                   if (data.getValue().equals(otherUsername.trim())) {
+                   if (data.child("username").getValue().equals(otherUsername.trim())) {
                        taken = true;
                        break;
                    }
